@@ -27,6 +27,9 @@
   <main>
     <div class="left-col">
     <section class="card input-panel">
+      <div class="palette-header">
+        <span class="palette-title">Seed Color</span>
+      </div>
       <div class="tabs" role="tablist">
         <button class="tab active" data-tab="rgb" role="tab" aria-selected="true">RGB</button>
         <button class="tab" data-tab="hsv" role="tab" aria-selected="false">HSV</button>
@@ -154,11 +157,22 @@
             <input type="range" class="hslider" id="chroma-slider" min="0" max="120" step="0.5" value="48">
           </div>
         </div>
+        <div class="hslider-group">
+          <div class="hslider-meta">
+            <span class="hslider-label">Tone</span>
+            <output class="hslider-value" id="tone-value">50</output>
+          </div>
+          <div class="hslider-wrap">
+            <div class="hslider-track" id="tone-track"></div>
+            <input type="range" class="hslider" id="tone-slider" min="0" max="100" step="1" value="50">
+          </div>
+        </div>
       </div>
 
       <div class="hex-row">
         <span class="hex-label">Hex</span>
         <input type="text" id="hex-input" value="#6750A4" maxlength="7" spellcheck="false" placeholder="#RRGGBB" aria-label="Hex color value">
+        <div class="color-preview" id="color-preview" aria-hidden="true"></div>
       </div>
 
     </section>

@@ -204,6 +204,15 @@ main {
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--md-primary) 20%, transparent);
 }
 
+.color-preview {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  border: 2px solid color-mix(in srgb, var(--md-outline-variant) 70%, transparent);
+  background-color: #6750A4;
+}
+
 /* ─── Horizontal Sliders (RGB / HSV / HSB tabs) ───────────────────────── */
 
 .hslider-group {

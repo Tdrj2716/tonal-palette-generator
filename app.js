@@ -3,7 +3,7 @@ import { Hct, TonalPalette, hexFromArgb, argbFromHex } from "./lib/material-colo
 const TONES = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 95, 99, 100];
 const DEFAULT_HEX = "#6750A4";
 
-const state = { hue: 265, chroma: 48, hex: DEFAULT_HEX };
+const state = { hue: 265, chroma: 48, tone: 50, hex: DEFAULT_HEX };
 
 const el = {
   hexInput: document.getElementById("hex-input"),
@@ -11,6 +11,9 @@ const el = {
   chromaSlider: document.getElementById("chroma-slider"),
   hueValue: document.getElementById("hue-value"),
   chromaValue: document.getElementById("chroma-value"),
+  toneSlider: document.getElementById("tone-slider"),
+  toneValue: document.getElementById("tone-value"),
+  colorPreview: document.getElementById("color-preview"),
   swatches: document.getElementById("swatches"),
   copyCSS: document.getElementById("copy-css"),
   copyJSON: document.getElementById("copy-json"),
@@ -116,15 +119,18 @@ function applyState() {
   // ─ 基準色（入力した hex をそのまま使う）
   const refHex = state.hex;
 
-  // ─ hex input
+  // ─ hex input & color preview
   el.hexInput.value = refHex;
+  el.colorPreview.style.backgroundColor = refHex;
 
   // ─ HCT sliders & displays
-  const h = fmt(state.hue), c = fmt(state.chroma);
+  const h = fmt(state.hue), c = fmt(state.chroma), t = Math.round(state.tone);
   el.hueSlider.value = state.hue;
   el.chromaSlider.value = state.chroma;
+  el.toneSlider.value = state.tone;
   el.hueValue.textContent = h + '°';
   el.chromaValue.textContent = String(c);
+  el.toneValue.textContent = String(t);
 
   // ─ RGB sliders & tracks
   const rgb = hexToRgb(refHex);
@@ -159,8 +165,10 @@ function applyState() {
   // ─ HCT sliders tracks & focus color
   const hctColor = `hsl(${Math.round(state.hue)},100%,50%)`;
   _setTrack('chroma-track', `linear-gradient(to right, hsl(${Math.round(state.hue)},0%,50%), hsl(${Math.round(state.hue)},100%,50%))`);
+  _setTrack('tone-track', `linear-gradient(to right, #000, hsl(${Math.round(state.hue)},100%,50%), #fff)`);
   _setSliderColor('hue-slider', hctColor);
   _setSliderColor('chroma-slider', hctColor);
+  _setSliderColor('tone-slider', hctColor);
 }
 
 function _setSlider(sliderId, valId, value, label) {
@@ -188,6 +196,7 @@ function updateFromHex(raw) {
   const hct = Hct.fromInt(argbFromHex(hex));
   state.hue = hct.hue;
   state.chroma = hct.chroma;
+  state.tone = hct.tone;
   state.hex = hex;
   applyState();
 }
@@ -225,12 +234,17 @@ el.hexInput.addEventListener('blur', () => {
 
 el.hueSlider.addEventListener('input', () => {
   state.hue = parseFloat(el.hueSlider.value);
-  state.hex = toHex(TonalPalette.fromHueAndChroma(state.hue, state.chroma).tone(50));
+  state.hex = toHex(TonalPalette.fromHueAndChroma(state.hue, state.chroma).tone(state.tone));
   applyState();
 });
 el.chromaSlider.addEventListener('input', () => {
   state.chroma = parseFloat(el.chromaSlider.value);
-  state.hex = toHex(TonalPalette.fromHueAndChroma(state.hue, state.chroma).tone(50));
+  state.hex = toHex(TonalPalette.fromHueAndChroma(state.hue, state.chroma).tone(state.tone));
+  applyState();
+});
+el.toneSlider.addEventListener('input', () => {
+  state.tone = parseFloat(el.toneSlider.value);
+  state.hex = toHex(TonalPalette.fromHueAndChroma(state.hue, state.chroma).tone(state.tone));
   applyState();
 });
 
