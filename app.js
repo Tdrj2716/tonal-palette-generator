@@ -122,11 +122,10 @@ function applyState() {
     hexEl.addEventListener('mouseenter', () => {
       clearTimeout(tooltipRevertTimer);
       swatchTooltip.textContent = `Copy ${hex}`;
+      const rect = hexEl.getBoundingClientRect();
+      swatchTooltip.style.left = (rect.left + rect.width / 2) + 'px';
+      swatchTooltip.style.top = (rect.top - 8) + 'px';
       swatchTooltip.classList.add('visible');
-    });
-    hexEl.addEventListener('mousemove', (e) => {
-      swatchTooltip.style.left = e.clientX + 'px';
-      swatchTooltip.style.top = (e.clientY - 8) + 'px';
     });
     hexEl.addEventListener('mouseleave', () => {
       swatchTooltip.classList.remove('visible');
