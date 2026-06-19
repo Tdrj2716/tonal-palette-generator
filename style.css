@@ -233,8 +233,7 @@ main {
   font-size: 12px;
   font-weight: 500;
   color: var(--md-on-surface-variant);
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
+  letter-spacing: 0.03em;
 }
 
 .hslider-value {
@@ -394,7 +393,7 @@ main {
   align-items: center;
   justify-content: space-between;
   padding: 0 20px;
-  cursor: pointer;
+  cursor: default;
   user-select: none;
 }
 
@@ -447,6 +446,7 @@ main {
   font-size: 14px;
   opacity: 0.9;
   letter-spacing: 0.02em;
+  cursor: pointer;
 }
 
 /* ─── Export section ──────────────────────────────────────────────────── */

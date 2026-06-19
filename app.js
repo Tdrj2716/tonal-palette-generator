@@ -118,20 +118,21 @@ function applyState() {
       `<div class="swatch-info"><span class="tone-label">TONE</span><span class="tone-num">${tone}</span></div>` +
       `<span class="hex-code">${hex}</span>`;
 
-    div.addEventListener('mouseenter', () => {
+    const hexEl = div.querySelector('.hex-code');
+    hexEl.addEventListener('mouseenter', () => {
       clearTimeout(tooltipRevertTimer);
       swatchTooltip.textContent = `Copy ${hex}`;
       swatchTooltip.classList.add('visible');
     });
-    div.addEventListener('mousemove', (e) => {
+    hexEl.addEventListener('mousemove', (e) => {
       swatchTooltip.style.left = (e.clientX + 14) + 'px';
       swatchTooltip.style.top = (e.clientY - 38) + 'px';
     });
-    div.addEventListener('mouseleave', () => {
+    hexEl.addEventListener('mouseleave', () => {
       swatchTooltip.classList.remove('visible');
       clearTimeout(tooltipRevertTimer);
     });
-    div.addEventListener('click', async () => {
+    hexEl.addEventListener('click', async () => {
       await copyText(hex);
       swatchTooltip.textContent = 'Copied to clipboard!';
       clearTimeout(tooltipRevertTimer);
