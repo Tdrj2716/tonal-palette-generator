@@ -394,13 +394,29 @@ main {
   align-items: center;
   justify-content: space-between;
   padding: 0 20px;
-  cursor: default;
+  cursor: pointer;
   user-select: none;
-  transition: filter 0.15s;
 }
 
-.swatch:hover {
-  filter: brightness(1.08);
+.swatch-tooltip {
+  position: fixed;
+  background: var(--md-surface-container-highest);
+  color: var(--md-on-surface);
+  font-size: 12px;
+  font-family: 'Roboto Mono', monospace;
+  padding: 6px 12px;
+  border-radius: 8px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.12s;
+  z-index: 100;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  border: 1px solid color-mix(in srgb, var(--md-outline-variant) 50%, transparent);
+}
+
+.swatch-tooltip.visible {
+  opacity: 1;
 }
 
 .swatch-info {

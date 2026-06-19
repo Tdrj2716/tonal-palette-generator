@@ -1,9 +1,13 @@
 import { Hct, TonalPalette, hexFromArgb, argbFromHex } from "./lib/material-color-utilities.js";
 
-const TONES = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 95, 99, 100];
+const TONES = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 95, 98, 99, 100];
 const DEFAULT_HEX = "#6750A4";
 
 const state = { hue: 265, chroma: 48, tone: 50, hex: DEFAULT_HEX };
+
+const swatchTooltip = Object.assign(document.createElement('div'), { className: 'swatch-tooltip' });
+document.body.appendChild(swatchTooltip);
+let tooltipRevertTimer = null;
 
 const el = {
   hexInput: document.getElementById("hex-input"),
@@ -113,6 +117,29 @@ function applyState() {
     div.innerHTML =
       `<div class="swatch-info"><span class="tone-label">TONE</span><span class="tone-num">${tone}</span></div>` +
       `<span class="hex-code">${hex}</span>`;
+
+    div.addEventListener('mouseenter', () => {
+      clearTimeout(tooltipRevertTimer);
+      swatchTooltip.textContent = `Copy ${hex}`;
+      swatchTooltip.classList.add('visible');
+    });
+    div.addEventListener('mousemove', (e) => {
+      swatchTooltip.style.left = (e.clientX + 14) + 'px';
+      swatchTooltip.style.top = (e.clientY - 38) + 'px';
+    });
+    div.addEventListener('mouseleave', () => {
+      swatchTooltip.classList.remove('visible');
+      clearTimeout(tooltipRevertTimer);
+    });
+    div.addEventListener('click', async () => {
+      await copyText(hex);
+      swatchTooltip.textContent = 'Copied to clipboard!';
+      clearTimeout(tooltipRevertTimer);
+      tooltipRevertTimer = setTimeout(() => {
+        swatchTooltip.textContent = `Copy ${hex}`;
+      }, 1500);
+    });
+
     el.swatches.appendChild(div);
   }
 
