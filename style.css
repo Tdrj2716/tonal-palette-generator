@@ -412,6 +412,7 @@ main {
   white-space: nowrap;
   box-shadow: 0 2px 8px rgba(0,0,0,0.4);
   border: 1px solid color-mix(in srgb, var(--md-outline-variant) 50%, transparent);
+  transform: translate(-50%, -100%);
 }
 
 .swatch-tooltip.visible {

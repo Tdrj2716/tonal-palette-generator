@@ -125,8 +125,8 @@ function applyState() {
       swatchTooltip.classList.add('visible');
     });
     hexEl.addEventListener('mousemove', (e) => {
-      swatchTooltip.style.left = (e.clientX + 14) + 'px';
-      swatchTooltip.style.top = (e.clientY - 38) + 'px';
+      swatchTooltip.style.left = e.clientX + 'px';
+      swatchTooltip.style.top = (e.clientY - 8) + 'px';
     });
     hexEl.addEventListener('mouseleave', () => {
       swatchTooltip.classList.remove('visible');
